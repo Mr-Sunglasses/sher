@@ -1,0 +1,112 @@
+---
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Fahh 💨</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+        font-family: "Comic Sans MS", "Comic Sans", monospace;
+        background: black;
+      }
+
+      canvas {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        z-index: 10;
+      }
+
+      footer {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        color: white;
+        z-index: 999;
+      }
+
+      #hint {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        pointer-events: none;
+      }
+
+      footer a {
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hint">
+      <h1>Click to Fahh 💨</h1>
+    </div>
+
+    <canvas></canvas>
+
+    <footer>
+      Made with 💨 <a href="https://astro.build">Astro</a> by
+      <a href="https://twitter.com/itsKanishkP">Kanishk Pachauri</a> - Source on
+      <a href="https://github.com/Mr-Sunglasses/sher">GitHub</a>
+    </footer>
+  </body>
+</html>
+
+<script>
+  const canvas = document.querySelector("canvas")!;
+  const ctx = canvas.getContext("2d")!;
+
+  const resize = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  };
+
+  window.addEventListener("resize", resize);
+  resize();
+
+  const sayFahh = () => {
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance("fahh");
+      utterance.pitch = 0.8;
+      utterance.rate = 0.7;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  canvas.onclick = (event) => {
+    const x = event.offsetX;
+    const y = event.offsetY;
+
+    // random rotation
+    const angleInRadians = Math.random() * Math.PI * 2;
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angleInRadians);
+
+    ctx.font = "bold 64px 'Comic Sans MS', 'Comic Sans', monospace";
+    ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 65%)`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("FAHH", 0, 0);
+
+    ctx.restore();
+
+    sayFahh();
+  };
+</script>
